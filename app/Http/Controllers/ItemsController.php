@@ -210,60 +210,81 @@ class ItemsController extends Controller
 
     public function DeleteIamge($id)
     {
-        $this->itemimages->where('item_id', '=', $id)->delete();
+        $this->itemimages->where('itemimages_id', '=', $id)->delete();
         return ['state' => 202];
     }
 
-    public function UpdateItem($request, $id)
+    public function UpdateItem($id)
     {
-
-        if ($request->input('item_image') == []) {
+        $request = Request()->all();
+        if (empty($request['img'])) {
 
 
             $item = new Items;
-            $item->item_name = $request->input('itemname_ar');
-            $item->item_nameen = $request->input('itemname_en');
-            $item->itemdetails_ar = $request->input('itemdetails_ar');
-            $item->itemdetails_en = $request->input('itemdetails_en');
-            $item->price = $request->input('price');
-            $item->category_id = $request->input('category_id');
-            $item->quantity = $request->input('quantity');
-            $item->messure_unit_ar = $request->input('messure_unit_ar');
-            $item->messure_unit_en = $request->input('messure_unit_en');
+//            $item->item_name = $request->input('itemname_ar');
+//            $item->item_nameen = $request->input('itemname_en');
+//            $item->itemdetails_ar = $request->input('itemdetails_ar');
+//            $item->itemdetails_en = $request->input('itemdetails_en');
+//            $item->price = $request->input('price');
+//            $item->category_id = $request->input('category_id');
+//            $item->quantity = $request->input('quantity');
+//            $item->messure_unit_ar = $request->input('messure_unit_ar');
+//            $item->messure_unit_en = $request->input('messure_unit_en');
 
-            $item->find($id)->update($item);
-//            $itemId = $item->item_id;
-            $noOfImages = count($request->item_image);
+
+            $item->where('item_id', $id)->update([
+                'item_name' => $request['itemname_ar'],
+                'item_nameen' => $request['itemname_en'],
+                'itemdetails_ar' => $request['itemdetails_ar'],
+                'itemdetails_en' => $request['itemdetails_en'],
+                'price' => $request['price'],
+                'category_id' => $request['categories_id'],
+                'sub_category_id' => $request['sub_category_id'],
+                'quantity' => $request['quantity'],
+                'messure_unit_ar' => $request['messure_unit_ar'],
+                'messure_unit_en' => $request['messure_unit_en']
+            ]);
+
         } else {
 
 
             $item = new Items;
-            $item->item_name = $request->input('itemname_ar');
-            $item->item_nameen = $request->input('itemname_en');
-            $item->itemdetails_ar = $request->input('itemdetails_ar');
-            $item->itemdetails_en = $request->input('itemdetails_en');
-            $item->price = $request->input('price');
-            $item->category_id = $request->input('category_id');
-            $item->quantity = $request->input('quantity');
-            $item->messure_unit_ar = $request->input('messure_unit_ar');
-            $item->messure_unit_en = $request->input('messure_unit_en');
+//            $item->item_name = $request->input('itemname_ar');
+//            $item->item_nameen = $request->input('itemname_en');
+//            $item->itemdetails_ar = $request->input('itemdetails_ar');
+//            $item->itemdetails_en = $request->input('itemdetails_en');
+//            $item->price = $request->input('price');
+//            $item->category_id = $request->input('category_id');
+//            $item->quantity = $request->input('quantity');
+//            $item->messure_unit_ar = $request->input('messure_unit_ar');
+//            $item->messure_unit_en = $request->input('messure_unit_en');
 
-            $item->find($id)->update($item);
-//            $itemId = $item->item_id;
-            $noOfImages = count($request->item_image);
+            $item->where('item_id', $id)->update([
+                'item_name' => $request['itemname_ar'],
+                'item_nameen' => $request['itemname_en'],
+                'itemdetails_ar' => $request['itemdetails_ar'],
+                'itemdetails_en' => $request['itemdetails_en'],
+                'price' => $request['price'],
+                'category_id' => $request['categories_id'],
+                'sub_category_id' => $request['sub_category_id'],
+                'quantity' => $request['quantity'],
+                'messure_unit_ar' => $request['messure_unit_ar'],
+                'messure_unit_en' => $request['messure_unit_en']
+            ]);
+            $noOfImages = count($request['img']);
 
             for ($i = 0; $i < $noOfImages; $i++) {
-                (new ItemImages)->storeItemImage($id, $request->input('item_image')[$i]);
+                (new ItemImages)->storeItemImage($id, $request['img'][$i]);
             }
         }
 
 
-        $item = $item->with('itemimages')
-            ->leftJoin(categories::getTable(), Items::getTable() . '.category_id', '=', categories::getTable() . '.categories_id')
-            ->where(Items::getTable() . '.item_id', '=', $id)
-            ->get();
-
-        return response()->json($item[0]);
+//        $item = $item->with('itemimages')
+//            ->leftJoin(categories::getTable(), Items::getTable() . '.category_id', '=', categories::getTable() . '.categories_id')
+//            ->where(Items::getTable() . '.item_id', '=', $id)
+//            ->get();
+//
+//        return response()->json($item[0]);
     }
 
     public function getItemSubCategory($sub_category_id)

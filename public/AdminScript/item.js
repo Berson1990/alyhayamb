@@ -127,20 +127,21 @@ var Item = new Vue({
 
             var self = this;
             console.log(row);
-            this.form = {
+            self.form = {
                 item_id: row.item_id,
                 itemname_ar: row.item_name,
                 itemname_en: row.item_name,
                 itemdetails_ar: row.itemdetails_ar,
                 itemdetails_en: row.itemdetails_en,
                 price: row.price,
-                category_id: row.category_id,
+                categories_id: row.categories_id,
                 sub_category_id: row.sub_category_id,
                 quantity: row.quantity,
                 messure_unit_ar: row.messure_unit_ar,
                 messure_unit_en: row.messure_unit_en
 
             };
+            self.getSubCtegory(self.form.categories_id);
             self.rowIamges = row.itemimages;
             console.log(this.rowIamges);
             this.title = 'تعديل';
@@ -158,13 +159,23 @@ var Item = new Vue({
             }
         },
         update: function () {
-            this.form.img = img;
+
+            var self = this;
+            self.form.img = img;
+            console.log(self.form);
             $.ajax({
-                url: "http://admin.alyahyamb.com/api/update/" + this.form.item_id,
+                url: "http://admin.alyahyamb.com/update/" + self.form.item_id,
                 method: 'Put',
                 data: this.form
 
             }).done(function (result) {
+
+                self.$message({
+                    showClose: true,
+                    message: 'تم تعديل المنتج  بنجاح',
+                    type: 'success'
+                });
+
                 console.log(result);
                 window.location.reload();
             });

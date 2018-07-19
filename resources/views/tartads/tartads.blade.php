@@ -14,8 +14,10 @@
         <div class="row">
 
             <br>
-            <data-tables :data="TartAdsData" :show-action-bar="false" :custom-filters="customFilters"
-                         :actions-def="actionsDef">
+            <data-tables
+                    v-loading="loading"
+                    :data="TartAdsData" :show-action-bar="false" :custom-filters="customFilters"
+                    :actions-def="actionsDef">
                 <el-row slot="custom-tool-bar" style="margin-bottom: 10px ; text-align: center">
 
 

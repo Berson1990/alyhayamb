@@ -22,6 +22,7 @@ $(document).ready(function () {
 var TartAds = new Vue({
     el: '#TartAds',
     data: {
+        loading: false,
         adds_id: '',
         TartAdsData: [],
         title: '',
@@ -102,12 +103,13 @@ var TartAds = new Vue({
             var self = this;
             self.form.add_image = img;
             console.log(self.form);
-
+            self.loading = true;
             $.ajax({
                 url: self.url + "/api/addTartAdds?lang=ar",
                 method: 'post',
                 data: self.form
             }).done(function (result) {
+                self.loading = false;
                 console.log(result);
                 TartAds.TartAdsData.push(result);
                 self.$message({
@@ -122,9 +124,9 @@ var TartAds = new Vue({
         update: function () {
             var self = this;
             self.form.add_image = img;
+            self.loading = true;
 
-
-             console.log(self.form);
+            console.log(self.form);
 
             $.ajax({
                 url: self.url + "/updatetartadds/" + self.form.adds_id,
@@ -133,6 +135,7 @@ var TartAds = new Vue({
 
             }).done(function (result) {
                 console.log(result);
+                self.loading = false;
                 self.$message({
                     showClose: true,
                     message: 'تم التعديل   بنجاح',

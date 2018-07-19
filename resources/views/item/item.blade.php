@@ -199,21 +199,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="category_id"> القسم :</label>
-                                    <el-select v-model="form.categories_id"  v-on:change="getSubCtegory(form.categories_id)" filterable placeholder="اختار قسم"
+                                    <el-select v-model="form.categories_id"
+                                               v-on:change="getSubCtegory(form.categories_id)" filterable
+                                               placeholder="اختار قسم"
                                                id="category_id">
                                         <el-option
                                                 v-for="category in Category"
                                                 :key="category.categories_id"
                                                 :label="category.categoryname_ar"
-                                                :value="category.categories_id">
+                                                :value="category.categories_id"
+                                        >
                                         </el-option>
                                     </el-select>
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="category_id"> القسم الفرعي :</label>
+                                    <label for="sub_category_id"> القسم الفرعي :</label>
                                     <el-select v-model="form.sub_category_id" filterable placeholder="اختار قسم"
-                                               id="category_id">
+                                               id="sub_category_id">
                                         <el-option
                                                 v-for="subcategory in SubCategory"
                                                 :key="subcategory.sub_category_id"
